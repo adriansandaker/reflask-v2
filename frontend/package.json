@@ -14,8 +14,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:server": "cross-env FLASK_ENV=development FLASK_APP=../backend/app.py flask run",
-    "build": "react-scripts build",
+    "start:server-dev": "cross-env FLASK_ENV=development FLASK_APP=../backend/app.py flask run",
+    "start:server-prod": "npm run purge:build && npm run build && cross-env FLASK_APP=../backend/app.py flask run",
+    "purge:build": "rm -r ../backend/build",
+    "build": "react-scripts build && mv build ../backend",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

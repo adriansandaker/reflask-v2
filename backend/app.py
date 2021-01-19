@@ -1,0 +1,35 @@
+import os
+import logging
+from flask import Flask, request
+from classifier import classifyImage
+from reverseProxy import proxyRequest
+
+MODE = os.getenv('FLASK_ENV')
+DEV_SERVER_URL = 'http://localhost:3000/'
+
+logging.getLogger('werkzeug').disabled = True
+
+# Ignore static folder in development mode.
+if MODE == "development":
+    app = Flask(__name__, static_folder=None)
+else:
+    app = Flask(__name__, static_folder='./build', static_url_path='/')
+
+@app.route('/')
+@app.route('/<path:path>')
+def index(path=''):
+    if MODE == 'development':
+        return proxyRequest(DEV_SERVER_URL, path)
+    else:
+        return app.send_static_file("index.html")
+
+@app.route('/classify', methods=['POST'])
+def classify():
+    if (request.files['image']): 
+        file = request.files['image']
+
+        result = classifyImage(file)
+
+        print('Model classification: ' + result)
+        
+        return result
