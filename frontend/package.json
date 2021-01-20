@@ -15,9 +15,8 @@
   "scripts": {
     "start": "react-scripts start",
     "start:server-dev": "cross-env FLASK_ENV=development FLASK_APP=../backend/app.py flask run",
-    "start:server-prod": "npm run purge:build && npm run build && cross-env FLASK_APP=../backend/app.py flask run",
-    "purge:build": "rm -r ../backend/build",
-    "build": "react-scripts build && mv build ../backend",
+    "start:server-prod": "npm run build && cross-env FLASK_APP=../backend/app.py flask run",
+    "build": "react-scripts build && cp -r build ../backend && rm -r build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
