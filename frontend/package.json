@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "concurrently": "^6.0.0",
     "cross-env": "^7.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -14,7 +15,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:server-dev": "cross-env FLASK_ENV=development FLASK_APP=../backend/app.py flask run",
+    "start:server-dev": "concurrently \"npm start\" \"cross-env FLASK_ENV=development FLASK_APP=../backend/app.py flask run\"",
     "start:server-prod": "rm -rf ../backend/templates && rm -rf ../backend/static && npm run build && cross-env FLASK_APP=../backend/app.py flask run",
     "build": "react-scripts build && mv build ../backend && mv ../backend/build/static ../backend && mv ../backend/build ../backend/templates",
     "test": "react-scripts test",
