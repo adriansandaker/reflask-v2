@@ -19,8 +19,8 @@ def classifyImage(file):
 
 def getPrediction(img_bytes, model):
     original_image = Image.open(img_bytes)
-    original_image = img.convert('RGB')
-    original_image = img.resize((224, 224), Image.NEAREST)
+    original_image = original_image.convert('RGB')
+    original_image = original_image.resize((224, 224), Image.NEAREST)
     
     numpy_image = image.img_to_array(original_image)
     image_batch = expand_dims(numpy_image, axis=0)
