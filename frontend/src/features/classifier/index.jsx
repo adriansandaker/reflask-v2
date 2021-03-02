@@ -13,10 +13,12 @@ const Classifier = () => {
     async function getCameraStream() {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: false, video: { facingMode: 'environment' }
-      })
+      });
+
       videoRef.current.srcObject = stream;
     };
-      getCameraStream();
+  
+    getCameraStream();
   }, []);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ const Classifier = () => {
 
       if (imageRef.current) {
         const formData = new FormData();
+
         formData.append('image', imageRef.current);
 
         const response = await fetch('/classify', {
@@ -41,6 +44,7 @@ const Classifier = () => {
         }
       }
     }, 1000);
+  
     return () => clearInterval(interval);
   }, []);
 
